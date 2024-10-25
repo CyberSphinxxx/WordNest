@@ -32,3 +32,6 @@ To run WordNest locally, follow these steps:
    ```
 3. Open `index.html` in your preferred web browser.
    
+## Usage
+1. Enter a word in the search bar and click the Search button to see its definitions and details.
+2. Click the Random Word button to fetch a random word and see its information.

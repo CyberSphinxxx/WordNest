@@ -2,6 +2,10 @@
 
 WordNest is a simple dictionary application built with HTML, CSS, and JavaScript. It allows users to search for words and fetch random words, providing definitions, phonetics, synonyms, antonyms, and example sentences.
 
+## Screenshot
+![Opera Snapshot_2024-10-26_011831_127 0 0 1](https://github.com/user-attachments/assets/36b4376f-7b18-467c-9e28-53f33fc1fb5a)
+
+
 ## Features
 
 - **Word Search**: Enter a word to retrieve its meaning, phonetics, synonyms, antonyms, and example usage.

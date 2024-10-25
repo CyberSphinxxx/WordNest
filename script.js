@@ -1,13 +1,10 @@
-// API URL
 const apiUrl = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 
-// Elements
 const searchInput = document.getElementById('search-input');
 const searchBtn = document.getElementById('search-btn');
 const randomBtn = document.getElementById('random-btn');
 const wordInfo = document.getElementById('word-info');
 
-// Event Listeners
 searchBtn.addEventListener('click', searchWord);
 randomBtn.addEventListener('click', getRandomWord);
 
@@ -34,17 +31,35 @@ function displayResults(data) {
     const phonetics = data.phonetics.map(p => p.text).join(', ') || "N/A";
 
     const meaningsHTML = data.meanings.map(meaning => {
+        // Part of speech (e.g., noun, verb)
         const partOfSpeech = `<h4>${meaning.partOfSpeech}:</h4>`;
+        
+        // Definitions with examples and additional details
         const definitionsList = meaning.definitions.map(def => {
-            let defHTML = `<p>${def.definition}</p>`;
+            let defHTML = `<p><strong>Definition:</strong> ${def.definition}</p>`;
+            
+            // Add example if present
             if (def.example) {
-                defHTML += `<p><em>Example: ${def.example}</em></p>`;
+                defHTML += `<p><em>Example:</em> ${def.example}</p>`;
             }
-            return defHTML;
+            
+            // Add synonyms if present
+            if (def.synonyms && def.synonyms.length > 0) {
+                defHTML += `<p><strong>Synonyms:</strong> ${def.synonyms.join(', ')}</p>`;
+            }
+            
+            // Add antonyms if present
+            if (def.antonyms && def.antonyms.length > 0) {
+                defHTML += `<p><strong>Antonyms:</strong> ${def.antonyms.join(', ')}</p>`;
+            }
+
+            return `<div class="definition-block">${defHTML}</div>`;
         }).join('');
+
         return `<div class="meaning-block">${partOfSpeech}${definitionsList}</div>`;
     }).join('');
 
+    // Render the final HTML
     wordInfo.innerHTML = `
         <h2>${word}</h2>
         <p><strong>Phonetics:</strong> ${phonetics}</p>
@@ -53,6 +68,7 @@ function displayResults(data) {
         </div>
     `;
 }
+
 
 // Display an error message
 function displayError(message) {

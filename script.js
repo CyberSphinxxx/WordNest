@@ -1,4 +1,5 @@
 const apiUrl = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
+const randomWordApiUrl = 'https://random-word-api.herokuapp.com/word?number=1'; // API to get a random word
 
 const searchInput = document.getElementById('search-input');
 const searchBtn = document.getElementById('search-btn');
@@ -40,7 +41,7 @@ function displayResults(data) {
             
             // Add example if present
             if (def.example) {
-                defHTML += `<p><em>Example:</em> ${def.example}</p>`;
+                defHTML += `<p style="margin-bottom: 20px;"><em>Example:</em> ${def.example}</p>`;
             }
             
             // Add synonyms if present
@@ -78,10 +79,18 @@ function displayError(message) {
     `;
 }
 
-// Fetch a random word (simulating randomness by selecting a word from a list)
-function getRandomWord() {
-    const randomWords = ['apple', 'serendipity', 'lie', 'inspiration', 'horizon', 'persistence'];
-    const randomWord = randomWords[Math.floor(Math.random() * randomWords.length)];
-    searchInput.value = randomWord;
-    searchWord();
+// Fetch a random word from the Random Word API
+async function getRandomWord() {
+    try {
+        const response = await fetch(randomWordApiUrl);
+        if (!response.ok) {
+            throw new Error('Failed to fetch a random word');
+        }
+        const randomWordArray = await response.json();
+        const randomWord = randomWordArray[0]; // Get the first word from the response
+        searchInput.value = randomWord;
+        searchWord();
+    } catch (error) {
+        displayError(error.message);
+    }
 }

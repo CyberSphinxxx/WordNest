@@ -1,108 +1,71 @@
+// API URL
+const apiUrl = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
+
+// Elements
 const searchInput = document.getElementById('search-input');
-const searchButton = document.getElementById('search-button');
-const randomWordButton = document.getElementById('random-word-button');
-const resultsDiv = document.getElementById('results');
-const historyDiv = document.getElementById('history');
-const favoritesDiv = document.getElementById('favorites');
-const wordOfTheDayDiv = document.getElementById('word-of-the-day');
-const themeToggle = document.getElementById('theme-toggle');
+const searchBtn = document.getElementById('search-btn');
+const randomBtn = document.getElementById('random-btn');
+const wordInfo = document.getElementById('word-info');
 
-let searchHistory = [];
-let favorites = [];
+// Event Listeners
+searchBtn.addEventListener('click', searchWord);
+randomBtn.addEventListener('click', getRandomWord);
 
-// Toggle dark mode
-themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-});
-
-// Search word on button click
-searchButton.addEventListener('click', () => {
+// Fetch word data
+async function searchWord() {
     const word = searchInput.value.trim();
     if (word) {
-        fetchWord(word);
-        addToHistory(word);
-    }
-});
-
-// Fetch random word on button click
-randomWordButton.addEventListener('click', () => {
-    fetchRandomWord();
-});
-
-// Fetch a word's data from the API
-function fetchWord(word) {
-    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-        .then(response => {
-            if (!response.ok) throw new Error('Word not found');
-            return response.json();
-        })
-        .then(data => {
+        try {
+            const response = await fetch(apiUrl + word);
+            if (!response.ok) {
+                throw new Error('Word not found');
+            }
+            const data = await response.json();
             displayResults(data[0]);
-        })
-        .catch(error => {
-            resultsDiv.innerHTML = `<p>${error.message}</p>`;
-        });
+        } catch (error) {
+            displayError(error.message);
+        }
+    }
 }
 
-// Display a random word from a predefined list
-function fetchRandomWord() {
-    const randomWords = ['apple', 'banana', 'cherry', 'date', 'elderberry']; // Example words
-    const randomWord = randomWords[Math.floor(Math.random() * randomWords.length)];
-    fetchWord(randomWord);
-}
-
-// Display word data in resultsDiv
+// Display word information
 function displayResults(data) {
     const word = data.word;
-    const phonetics = data.phonetics.map(p => p.text).join(', ');
-    const definitions = data.meanings.map(meaning => {
-        return `<p><strong>${meaning.partOfSpeech}:</strong> ${meaning.definitions[0].definition}</p>`;
+    const phonetics = data.phonetics.map(p => p.text).join(', ') || "N/A";
+
+    const meaningsHTML = data.meanings.map(meaning => {
+        const partOfSpeech = `<h4>${meaning.partOfSpeech}:</h4>`;
+        const definitionsList = meaning.definitions.map(def => {
+            let defHTML = `<p>${def.definition}</p>`;
+            if (def.example) {
+                defHTML += `<p><em>Example: ${def.example}</em></p>`;
+            }
+            return defHTML;
+        }).join('');
+        return `<div class="meaning-block">${partOfSpeech}${definitionsList}</div>`;
     }).join('');
-    const examples = data.meanings.map(meaning => {
-        return meaning.definitions[0].example ? `<p><em>Example: ${meaning.definitions[0].example}</em></p>` : '';
-    }).join('');
-    
-    resultsDiv.innerHTML = `
-        <h2>${word} <button onclick="toggleFavorite('${word}')">⭐</button></h2>
-        <p>Phonetics: ${phonetics}</p>
-        ${definitions}
-        ${examples}
+
+    wordInfo.innerHTML = `
+        <h2>${word}</h2>
+        <p><strong>Phonetics:</strong> ${phonetics}</p>
+        <div class="meanings-container">
+            ${meaningsHTML}
+        </div>
     `;
 }
 
-// Add word to history if not already present
-function addToHistory(word) {
-    if (!searchHistory.includes(word)) {
-        searchHistory.push(word);
-        displayHistory();
-    }
+// Display an error message
+function displayError(message) {
+    wordInfo.innerHTML = `
+        <h2>Error</h2>
+        <p>${message}</p>
+    `;
 }
 
-// Display search history in historyDiv
-function displayHistory() {
-    historyDiv.innerHTML = searchHistory.map(word => `<p>${word}</p>`).join('');
+// Fetch a random word (simulating randomness by selecting a word from a list)
+function getRandomWord() {
+    const randomWords = ['apple', 'serendipity', 'lie', 'inspiration', 'horizon', 'persistence'];
+    const randomWord = randomWords[Math.floor(Math.random() * randomWords.length)];
+    searchInput.value = randomWord;
+    searchWord();
 }
-
-// Toggle favorite status of a word
-function toggleFavorite(word) {
-    if (favorites.includes(word)) {
-        favorites = favorites.filter(fav => fav !== word);
-    } else {
-        favorites.push(word);
-    }
-    displayFavorites();
-}
-
-// Display favorites in favoritesDiv
-function displayFavorites() {
-    favoritesDiv.innerHTML = favorites.map(word => `<p>${word}</p>`).join('');
-}
-
-// Set a word of the day
-function setWordOfTheDay() {
-    const todayWord = 'example'; // Could implement API or random word generator here
-    fetchWord(todayWord);
-}
-
-// Initialize the word of the day on page load
-setWordOfTheDay();

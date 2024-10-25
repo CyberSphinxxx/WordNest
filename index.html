@@ -3,33 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WordNest - Dictionary App</title>
+    <title>WordNest</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>WordNest</h1>
-            <button id="theme-toggle">🌙</button>
-        </header>
-        <main>
-            <div class="search-container">
-                <input type="text" id="search-input" placeholder="Enter a word..." />
-                <button id="search-button">Search</button>
-                <button id="random-word-button">Random Word</button>
-            </div>
-            <section id="word-of-the-day" class="info-section"></section>
-            <section id="results" class="info-section"></section>
-            <section id="history" class="info-section">
-                <h3>Search History</h3>
-                <div class="content"></div>
-            </section>
-            <section id="favorites" class="info-section">
-                <h3>Favorites</h3>
-                <div class="content"></div>
-            </section>
-        </main>
-    </div>
+    <header>
+        <h1>WordNest</h1>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Enter a word...">
+            <button id="search-btn">Search</button>
+            <button id="random-btn">Random Word</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="word-info">
+            <!-- Word information will be displayed here -->
+        </section>
+    </main>
+
     <script src="script.js"></script>
 </body>
 </html>

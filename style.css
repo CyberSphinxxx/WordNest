@@ -1,4 +1,3 @@
-/* Global Styles */
 body {
     margin: 0;
     padding: 0;
@@ -98,7 +97,27 @@ main {
     color: #555;
 }
 
-/* Dark Mode */
+.meanings-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.meaning-group {
+    margin-bottom: 20px;
+}
+
+.meaning-group h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #4caf50;
+}
+
+.phonetics {
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
 body.dark-mode {
     background-color: #2b2b2b;
     color: #f5f5f5;

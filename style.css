@@ -2,8 +2,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f1f1f1;
-    color: #333;
+    background-color: #2f2f2f;
+    color: #5a5a5a;
 }
 
 header {
@@ -72,7 +72,7 @@ main {
 }
 
 #word-info h2 {
-    font-size: 2rem;
+    font-size: 3rem;
     margin-bottom: 20px;
     color: #007bff;
 }

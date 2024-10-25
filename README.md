@@ -35,3 +35,6 @@ To run WordNest locally, follow these steps:
 ## Usage
 1. Enter a word in the search bar and click the Search button to see its definitions and details.
 2. Click the Random Word button to fetch a random word and see its information.
+
+## Contributing
+Contributions are welcome! If you have suggestions for improvements or new features, please open an issue or submit a pull request.

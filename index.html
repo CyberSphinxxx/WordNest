@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WordNest</title>
+    <title>Dictionary App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <div class="container">
+        <header>
+            <h1>Dictionary App</h1>
+            <button id="theme-toggle">Toggle Dark/Light Mode</button>
+        </header>
+        <main>
+            <input type="text" id="search-input" placeholder="Enter a word..." />
+            <button id="search-button">Search</button>
+            <button id="random-word-button">Random Word</button>
+            <div id="word-of-the-day"></div>
+            <div id="results"></div>
+            <div id="history"></div>
+            <div id="favorites"></div>
+        </main>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
